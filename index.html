@@ -87,7 +87,6 @@
             text-align: left;
             opacity: 0.9;
             word-spacing: normal;
-            hyphens: auto;
         }
         
         a {
@@ -117,30 +116,32 @@
             width: 100%;
         }
         
-
-        .term {
+        .info-wrapper {
             position: relative;
             display: inline-block;
-            cursor: help;
+        }
+        
+        .info-trigger {
             color: #00f2fe;
             font-weight: 500;
             border-bottom: 2px dotted #00f2fe;
+            cursor: pointer;
             transition: all 0.3s ease;
             -webkit-tap-highlight-color: transparent;
-            user-select: none;
+            padding: 2px 0;
         }
         
-        .term:hover {
+        .info-trigger:hover {
             color: #4facfe;
             border-bottom-color: #4facfe;
             text-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
         }
         
-        .tooltip {
+        .info-content {
             position: absolute;
             bottom: 100%;
             left: 50%;
-            transform: translateX(-50%) scale(0.8);
+            transform: translateX(-50%);
             background: rgba(31, 31, 51, 0.98);
             border: 1px solid rgba(79, 172, 254, 0.5);
             border-radius: 12px;
@@ -148,19 +149,21 @@
             width: 300px;
             margin-bottom: 10px;
             opacity: 0;
-            pointer-events: none;
+            visibility: hidden;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             z-index: 1000;
+            pointer-events: none;
         }
         
-        .term:hover .tooltip {
+        .info-wrapper.active .info-content {
             opacity: 1;
-            transform: translateX(-50%) scale(1);
+            visibility: visible;
+            pointer-events: auto;
         }
         
-        .tooltip::after {
+        .info-content::after {
             content: '';
             position: absolute;
             top: 100%;
@@ -208,7 +211,7 @@
             margin-bottom: 10px;
         }
         
-        /* Mobile optimization */
+        /* Mobile Styles */
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -245,49 +248,25 @@
                 margin: 20px 0;
             }
             
-            /* Make touch targets larger on mobile */
-            .term {
-                padding: 2px 4px;
-                margin: -2px -4px;
-                min-height: 30px;
-                display: inline-flex;
-                align-items: center;
-            }
-            
-            /* Mobile tooltip behavior */
-            .term {
-                position: relative;
+            .info-trigger {
+                padding: 5px 2px;
                 display: inline-block;
-                cursor: pointer;
             }
             
-            .tooltip {
+            .info-content {
                 position: fixed;
                 bottom: 20px;
                 left: 10px;
                 right: 10px;
                 top: auto;
-                transform: translateX(0) translateY(100%);
+                transform: translateX(0);
                 width: auto;
                 margin: 0;
                 font-size: 0.85em;
-                padding: 12px 15px;
-                border-radius: 10px;
-                background: rgba(31, 31, 51, 0.98);
                 z-index: 9999;
-                transition: transform 0.3s ease, opacity 0.3s ease;
-                pointer-events: auto;
-                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
             }
             
-            .term.active .tooltip,
-            /* Touch device support */
-            .term:active .tooltip {
-                opacity: 1;
-                transform: translateX(0) translateY(0);
-            }
-            
-            .tooltip::after {
+            .info-content::after {
                 display: none;
             }
         }
@@ -310,23 +289,15 @@
                 padding: 15px;
             }
         }
-        
-        /* Mobile and touch devices */
-        @media (hover: none), (pointer: coarse) {
-            .term.active .tooltip {
-                opacity: 1;
-                transform: translateX(0) translateY(0);
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>KI und digitale Kompetenzen</h1>
         
-        <p>Die Frage, für welche Problemstellung sich künstliche Intelligenz eignet ist zentral. Als eine mögliche Antwort finde ich die <span class="term">„Reduktion von Komplexität"<span class="tooltip">Die Vereinfachung vielschichtiger Zusammenhänge durch systematische Analyse und Strukturierung. KI hilft dabei, aus grossen Datenmengen Muster zu erkennen und komplexe Probleme in handhabbare Teilaufgaben zu zerlegen.</span></span> passend. Sie ist identisch mit der Frage nach der Problemstellung des Lernens. Es wird dadurch auch verständlich, wieso KI und das Lernen diese starke Nähe haben, welche aber auch voller Risiken und Chancen steckt.</p>
+        <p>Die Frage, für welche Problemstellung sich künstliche Intelligenz eignet ist zentral. Als eine mögliche Antwort finde ich die <span class="info-wrapper"><span class="info-trigger">„Reduktion von Komplexität"</span><span class="info-content">Die Vereinfachung vielschichtiger Zusammenhänge durch systematische Analyse und Strukturierung. KI hilft dabei, aus grossen Datenmengen Muster zu erkennen und komplexe Probleme in handhabbare Teilaufgaben zu zerlegen.</span></span> passend. Sie ist identisch mit der Frage nach der Problemstellung des Lernens. Es wird dadurch auch verständlich, wieso KI und das Lernen diese starke Nähe haben, welche aber auch voller Risiken und Chancen steckt.</p>
         
-        <p>KI ist zudem ein Phänomen der Digitalisierung. Die Digitalisierung hilft uns Muster in/mit Daten zu erzeugen, welche uns wiederum helfen, die Komplexität der gesellschaftlichen Handlungen auf Makro- oder Mikroebene zu reduzieren (Grundlagenwerk für diese Thematik: <span class="term">„Muster"<span class="tooltip">Ein Werk von Armin Nassehi, das die Digitalisierung als Technik zur Mustererkennung in gesellschaftlichen Strukturen analysiert. Es zeigt, wie digitale Technologien soziale Komplexität durch Datenanalyse erfassbar machen.</span></span> von Armin Nassehi).</p>
+        <p>KI ist zudem ein Phänomen der Digitalisierung. Die Digitalisierung hilft uns Muster in/mit Daten zu erzeugen, welche uns wiederum helfen, die Komplexität der gesellschaftlichen Handlungen auf Makro- oder Mikroebene zu reduzieren (Grundlagenwerk für diese Thematik: <span class="info-wrapper"><span class="info-trigger">„Muster"</span><span class="info-content">Ein Werk von Armin Nassehi, das die Digitalisierung als Technik zur Mustererkennung in gesellschaftlichen Strukturen analysiert. Es zeigt, wie digitale Technologien soziale Komplexität durch Datenanalyse erfassbar machen.</span></span> von Armin Nassehi).</p>
         
         <h2>Integration in den Rahmenlehrplan</h2>
         
@@ -346,7 +317,7 @@
             <p>Technisch formuliert heisst das, um eine Maschine (nichts anderes sind generative Sprachmodelle) möglichst gut einsetzen zu können, muss diese auch bedient werden können. Der Umgang mit Maschinen kann nicht abstrakt abgehandelt werden, er muss eingeübt sein.</p>
         </div>
         
-        <p>Darum ist die Digitalisierung ein gutes Praxisfeld für <span class="term">handlungskompetenzorientierten<span class="tooltip">Ein Lernansatz, bei dem Kompetenzen durch praktisches Handeln erworben werden. Lernende entwickeln Fähigkeiten direkt in realen oder realitätsnahen Situationen, statt nur theoretisches Wissen anzusammeln.</span></span> Unterricht. Erst in der Anwendung der Technologie erkennt man ihre Funktionsweisen. Ich kann keinen Kuchen backen ohne Anwendungskenntnisse von Messgeräten, Backofen und Verarbeitungstechniken: Der Kuchen wird in der Küche gebacken.</p>
+        <p>Darum ist die Digitalisierung ein gutes Praxisfeld für <span class="info-wrapper"><span class="info-trigger">handlungskompetenzorientierten</span><span class="info-content">Ein Lernansatz, bei dem Kompetenzen durch praktisches Handeln erworben werden. Lernende entwickeln Fähigkeiten direkt in realen oder realitätsnahen Situationen, statt nur theoretisches Wissen anzusammeln.</span></span> Unterricht. Erst in der Anwendung der Technologie erkennt man ihre Funktionsweisen. Ich kann keinen Kuchen backen ohne Anwendungskenntnisse von Messgeräten, Backofen und Verarbeitungstechniken: Der Kuchen wird in der Küche gebacken.</p>
         
         <h2>Prompting als praktische Kompetenz</h2>
         
@@ -356,7 +327,7 @@
         
         <h2>Digital Literacy und Informationskompetenz</h2>
         
-        <p>Aber KI ist nicht gleich Prompting, dieser Meinung bin ich natürlich auch. Wenn man die Auseinandersetzung um die <span class="term">Digital Literacy<span class="tooltip">Die Fähigkeit, digitale Technologien kompetent und kritisch zu nutzen. Umfasst technische Fertigkeiten, Informationsbewertung, digitale Kommunikation und das Verständnis digitaler Auswirkungen auf Gesellschaft und Individuum.</span></span> (<a href="https://static1.squarespace.com/static/59bc3457ccc5c5890fe7cacd/t/680abc889c24c4528be7cda8/1745534104111/DS+CHW+Framework_EN_04.02.25+%281%29.pdf" target="_blank">gutes Beispiel einer berufsspezifischen Umsetzung</a>) (AI Literacy wird im <span class="term">EU AI Act<span class="tooltip">Die weltweit erste umfassende KI-Regulierung der EU. Sie klassifiziert KI-Systeme nach Risikostufen und fordert von Unternehmen Transparenz, Sicherheitsmaßnahmen und die Förderung von AI Literacy bei Mitarbeitenden.</span></span> (<a href="https://artificialintelligenceact.eu/ai-literacy-programs/" target="_blank">Details zu AI Literacy Programs</a>) als <a href="https://www.lawpilots.com/de/lp/ki-fuehrerschein/" target="_blank">Pflicht</a> für Unternehmen aufgeführt) ansieht, können mehrere Themenbereiche identifiziert werden, eines davon ist die Informationskompetenz. Diese ist aus meiner Sicht von grosser Bedeutung für die digitale Kompetenz der Mitglieder einer Gesellschaft.</p>
+        <p>Aber KI ist nicht gleich Prompting, dieser Meinung bin ich natürlich auch. Wenn man die Auseinandersetzung um die <span class="info-wrapper"><span class="info-trigger">Digital Literacy</span><span class="info-content">Die Fähigkeit, digitale Technologien kompetent und kritisch zu nutzen. Umfasst technische Fertigkeiten, Informationsbewertung, digitale Kommunikation und das Verständnis digitaler Auswirkungen auf Gesellschaft und Individuum.</span></span> (<a href="https://static1.squarespace.com/static/59bc3457ccc5c5890fe7cacd/t/680abc889c24c4528be7cda8/1745534104111/DS+CHW+Framework_EN_04.02.25+%281%29.pdf" target="_blank">gutes Beispiel einer berufsspezifischen Umsetzung</a>) (AI Literacy wird im <span class="info-wrapper"><span class="info-trigger">EU AI Act</span><span class="info-content">Die weltweit erste umfassende KI-Regulierung der EU. Sie klassifiziert KI-Systeme nach Risikostufen und fordert von Unternehmen Transparenz, Sicherheitsmaßnahmen und die Förderung von AI Literacy bei Mitarbeitenden.</span></span> (<a href="https://artificialintelligenceact.eu/ai-literacy-programs/" target="_blank">Details zu AI Literacy Programs</a>) als <a href="https://www.lawpilots.com/de/lp/ki-fuehrerschein/" target="_blank">Pflicht</a> für Unternehmen aufgeführt) ansieht, können mehrere Themenbereiche identifiziert werden, eines davon ist die Informationskompetenz. Diese ist aus meiner Sicht von grosser Bedeutung für die digitale Kompetenz der Mitglieder einer Gesellschaft.</p>
         
         <p>KI ist aber als Technologie in Informationsaneignungsprozessen bereits fest integriert und wird noch stärker integriert werden, so lanciert gerade Perplexity einen eigenen Browser und OpenAI hat einen eigenen Browser angekündigt. Wichtige Informationsorte, welche mit der Einfachheit der Googlesuche bis jetzt nicht den nötigen Stellenwert erhalten haben, sind kuratierte und z.T. geschlossene Medienarchive wie swissdox, e-thek oder statista. Diese als kuratierte Quellenarchive sichtbar zu machen und aufzuwerten, ist eine mögliche Praxis in den aktuell stark veränderten Such- und Recherchetools (<a href="https://share.evernote.com/note/1c0f0d2d-7647-6c7b-37d9-81c4144d4b24" target="_blank">siehe Text der Zeit.de</a> oder <a href="https://www.zeit.de/2025/30/verlagswesen-krise-kuenstliche-intelligenz-medienbranche-google" target="_blank">Direktlink</a>), um mehr Gewissheit über die Qualität der Suchergebnisse zu erhalten. Wie ihr in der <a href="https://dlhedu.github.io/slpabudskills/" target="_blank">SLP-Übersicht</a> sieht, ist das bereits mitgedacht.</p>
         
@@ -386,70 +357,48 @@
     </div>
     
     <script>
-        // Mobile touch support for tooltips
         document.addEventListener('DOMContentLoaded', function() {
-            let activeTooltip = null;
+            let activeInfo = null;
             
-            // Function to handle tooltip activation
-            function activateTooltip(term) {
-                // Close any open tooltip
-                if (activeTooltip && activeTooltip !== term) {
-                    activeTooltip.classList.remove('active');
-                    const oldTooltip = activeTooltip.querySelector('.tooltip');
-                    if (oldTooltip) {
-                        oldTooltip.style.opacity = '0';
-                        oldTooltip.style.transform = 'translateX(0) translateY(100%)';
-                    }
-                }
-                
-                // Toggle current tooltip
-                term.classList.toggle('active');
-                const tooltip = term.querySelector('.tooltip');
-                if (tooltip) {
-                    if (term.classList.contains('active')) {
-                        tooltip.style.opacity = '1';
-                        tooltip.style.transform = 'translateX(0) translateY(0)';
-                        activeTooltip = term;
+            // Alle Info-Trigger finden
+            const infoTriggers = document.querySelectorAll('.info-trigger');
+            
+            infoTriggers.forEach(trigger => {
+                // Event-Listener für Klick/Touch
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const wrapper = this.closest('.info-wrapper');
+                    
+                    // Wenn bereits aktiv, schließen
+                    if (wrapper === activeInfo) {
+                        wrapper.classList.remove('active');
+                        activeInfo = null;
                     } else {
-                        tooltip.style.opacity = '0';
-                        tooltip.style.transform = 'translateX(0) translateY(100%)';
-                        activeTooltip = null;
+                        // Vorheriges schließen
+                        if (activeInfo) {
+                            activeInfo.classList.remove('active');
+                        }
+                        // Neues öffnen
+                        wrapper.classList.add('active');
+                        activeInfo = wrapper;
                     }
-                }
-            }
-            
-            // Add click and touch listeners for all devices
-            document.querySelectorAll('.term').forEach(term => {
-                // Click event for all devices
-                term.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    activateTooltip(this);
                 });
-                
-                // Touch event for mobile devices
-                term.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    activateTooltip(this);
-                }, {passive: false});
             });
             
-            // Close tooltip when clicking/touching outside
-            document.addEventListener('click', handleOutsideClick);
-            document.addEventListener('touchstart', handleOutsideClick, {passive: false});
-            
-            function handleOutsideClick(e) {
-                if (!e.target.closest('.term') && activeTooltip) {
-                    activeTooltip.classList.remove('active');
-                    const tooltip = activeTooltip.querySelector('.tooltip');
-                    if (tooltip) {
-                        tooltip.style.opacity = '0';
-                        tooltip.style.transform = 'translateX(0) translateY(100%)';
-                    }
-                    activeTooltip = null;
+            // Schließen bei Klick außerhalb
+            document.addEventListener('click', function(e) {
+                if (activeInfo && !e.target.closest('.info-wrapper')) {
+                    activeInfo.classList.remove('active');
+                    activeInfo = null;
                 }
-            }
+            });
+            
+            // Verhindern, dass Info-Content Klicks das Schließen auslösen
+            document.querySelectorAll('.info-content').forEach(content => {
+                content.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
         });
     </script>
 </body>
