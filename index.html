@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI und digitale Kompetenzen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e8e8e8;
+            line-height: 1.8;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.5));
+            }
+            to {
+                filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.8));
+            }
+        }
+        
+        h2 {
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            color: #4facfe;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 2px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            opacity: 0.9;
+        }
+        
+        a {
+            color: #4facfe;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        a:hover {
+            color: #00f2fe;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.8);
+        }
+        
+        a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            transition: width 0.3s ease;
+        }
+        
+        a.term {
+            color: #00f2fe;
+            text-decoration: none;
+            border-bottom: 2px dotted #00f2fe;
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        a.term:hover {
+            color: #4facfe;
+            border-bottom-color: #4facfe;
+            text-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+        }
+        
+        a.term::after {
+            display: none;
+        }
+        
+        a.term:hover .tooltip {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        .term {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            color: #00f2fe;
+            font-weight: 500;
+            border-bottom: 2px dotted #00f2fe;
+            transition: all 0.3s ease;
+        }
+        
+        .term:hover {
+            color: #4facfe;
+            border-bottom-color: #4facfe;
+            text-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            background: rgba(31, 31, 51, 0.98);
+            border: 1px solid rgba(79, 172, 254, 0.5);
+            border-radius: 12px;
+            padding: 15px 20px;
+            width: 300px;
+            margin-bottom: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+        
+        .term:hover .tooltip {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: rgba(79, 172, 254, 0.5);
+        }
+        
+        .quote {
+            border-left: 4px solid #4facfe;
+            padding-left: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            opacity: 0.85;
+            background: rgba(79, 172, 254, 0.05);
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .tip {
+            background: rgba(79, 172, 254, 0.1);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            position: relative;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(79, 172, 254, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(79, 172, 254, 0.4);
+            }
+        }
+        
+        .tip::before {
+            content: '💡 Tipp:';
+            font-weight: bold;
+            color: #4facfe;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .tooltip {
+                width: 250px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>KI und digitale Kompetenzen</h1>
+        
+        <p>Die Frage, für welche Problemstellung sich künstliche Intelligenz eignet ist zentral. Als eine mögliche Antwort finde ich die <span class="term">„Reduktion von Komplexität"<span class="tooltip">Die Vereinfachung vielschichtiger Zusammenhänge durch systematische Analyse und Strukturierung. KI hilft dabei, aus großen Datenmengen Muster zu erkennen und komplexe Probleme in handhabbare Teilaufgaben zu zerlegen.</span></span> passend. Sie ist daher identisch mit der Frage nach der Problemstellung des Lernens. Es wird dadurch auch verständlich, wieso KI und das Lernen diese starke Nähe haben, welche aber auch voller Risiken und Chancen steckt.</p>
+        
+        <p>KI ist zudem ein Phänomen der Digitalisierung. Die Digitalisierung hilft uns Muster in/mit Daten zu erzeugen, welche uns wiederum helfen, die Komplexität der gesellschaftlichen Handlungen auf Makro- oder Mikroebene zu reduzieren (Grundlagenwerk für diese Thematik: <span class="term">„Muster"<span class="tooltip">Ein Werk von Armin Nassehi, das die Digitalisierung als Technik zur Mustererkennung in gesellschaftlichen Strukturen analysiert. Es zeigt, wie digitale Technologien soziale Komplexität durch Datenanalyse erfassbar machen.</span></span> von Armin Nassehi).</p>
+        
+        <h2>Integration in den Rahmenlehrplan</h2>
+        
+        <p>Der Rahmenlehrplan hat erst in der letzten Version die Digitalisierung konkreter formuliert, indem sie in die Sprachmodi integriert wird und indem der ursprünglich genannte Aspekt „Technologie" neu „Technologische und digitale Transformation" heisst.</p>
+        
+        <p>In der aktuellen Phase der Erstellung der Konsultationsversion des SLP habe ich die Kerngruppe darauf hingewiesen, dass eine Ordnungsstruktur der im SLP aufgeführten digitalen Kompetenzen noch fehle und diese u.U. noch abgebildet werden müsste. Aus Zeitgründen war das bis jetzt noch nicht möglich. Für den SLP der zweijährigen Grundbildung konnte ich aber bereits einen ersten Überblick erstellen: <a href="https://dlhedu.github.io/slpabudskills/" target="_blank">https://dlhedu.github.io/slpabudskills/</a></p>
+        
+        <p>Dort wird ersichtlich, dass KI-Kompetenzen in den Kontext der digitalen Kompetenzen eingeordnet sind.</p>
+        
+        <h2>Digitaler Kontext der KI-Kompetenzen</h2>
+        
+        <p>Wenn ich eure kurzen Hinweise mit längeren Reflexionen entgegnen darf, würde ich bezogen auf den digitalen Kontext der KI-Kompetenzen als erstes sagen, dass an erster Stelle nicht die Frage steht, für welche Fälle/Anliegen/Herausforderungen sich KI eignet, sondern jene Fragen, welche auf die Kategorien der digitalen Kompetenzen und den Ort der KI-Kompetenzen bezogen sind.</p>
+        
+        <p>Zweitens würde ich die grosse Herausforderung sehen, dass digitale Kompetenzen immer auch einen technologischen Charakter haben, der nicht rein theoretisch an Allgemeinplätzen abgearbeitet werden kann, sondern schon immer eine konkrete Erfahrung im jeweiligen Handlungsfeld braucht.</p>
+        
+        <div class="quote">
+            <p>Technisch formuliert heisst das, um eine Maschine (nichts anderes sind generative Sprachmodelle) möglichst gut einsetzen zu können, muss diese auch bedient werden können. Der Umgang mit Maschinen kann nicht abstrakt abgehandelt werden, er muss eingeübt sein.</p>
+        </div>
+        
+        <p>Darum ist die Digitalisierung ein gutes Praxisfeld für <span class="term">handlungskompetenzorientierten<span class="tooltip">Ein Lernansatz, bei dem Kompetenzen durch praktisches Handeln erworben werden. Lernende entwickeln Fähigkeiten direkt in realen oder realitätsnahen Situationen, statt nur theoretisches Wissen anzusammeln.</span></span> Unterricht. Erst in der Anwendung der Technologie erkennt man ihre Funktionsweisen. Ich kann keinen Kuchen backen ohne Anwendungskenntnisse von Messgeräten, Backofen und Verarbeitungstechniken: Der Kuchen wird in der Küche gebacken.</p>
+        
+        <h2>Prompting als praktische Kompetenz</h2>
+        
+        <p>Die Berufslehre ist ein gutes Beispiel dafür, dass man nicht zuerst die Theorie anschaut, wofür etwas gut ist, sondern schon immer in der Anwendung die theoretische Einordnung macht, wie eine Handlung auch normativ beschrieben werden kann.</p>
+        
+        <p>Einen Prompt zu machen kann nicht rein theoretisch eingeholt werden, er ist immer auch eine Art Leitfaden dafür, wie man mit generativen Sprachmodellen arbeitet und er benötigt immer auch die konkrete iterative Anwendung, um zu einem passenden Ergebnis zu kommen. Aus meiner Sicht ein ideales Beispiel für handlungskompetenzorientiertes Lernen: Wer nicht wirklich gepromptet hat, weiss nicht, wie KI sinnvoll eingesetzt werden kann. Wir haben diese Erkenntnis im Thema 4 der zweijährigen Grundbildung mit einem entsprechenden Lerninhalt auch realisieren können. Wir zielen dort auf die Aneignung der KI-Kompetenz einen konkreten bereits bestehenden Input in einen gewünschten Output zu verwandeln.</p>
+        
+        <h2>Digital Literacy und Informationskompetenz</h2>
+        
+        <p>Aber KI ist nicht gleich Prompting, dieser Meinung bin ich natürlich auch. Wenn man die Auseinandersetzung um die <a href="ip51-global-framework-reference-digital-literacy-skills-2018-en.pdf" target="_blank">Digital Literacy</a> (AI Literacy wird im <a href="AI Literacy Programs in Europe – Supporting Article 4 of the EU AI Act | EU Artificial Intelligence Act" target="_blank">EU AI Act</a> als <a href="KI-Führerschein - lawpilots" target="_blank">Pflicht</a> für Unternehmen aufgeführt) ansieht, können mehrere Themenbereiche identifiziert werden, eines davon ist die Informationskompetenz. Diese ist aus meiner Sicht von grosser Bedeutung für die digitale Kompetenz der Mitglieder einer Gesellschaft.</p>
+        
+        <p>KI ist aber als Technologie in Informationsaneignungsprozessen bereits fest integriert und wird noch stärker integriert werden, so lanciert gerade Perplexity einen eigenen Browser und OpenAI hat einen eigenen Browser angekündigt. Wichtige Informationsorte, welche mit der Einfachheit der Googlesuche bis jetzt nicht den nötigen Stellenwert erhalten haben, sind kuratierte und z.T. geschlossene Medienarchive wie swissdox, e-thek oder statista. Diese als kuratierte Quellenarchive sichtbar zu machen und aufzuwerten, ist eine mögliche Praxis in den aktuell stark veränderten Such- und Recherchetools (<a href="https://share.evernote.com/note/1c0f0d2d-7647-6c7b-37d9-81c4144d4b24" target="_blank">siehe Text der Zeit.de</a> oder <a href="Verlagswesen in der Krise: Werden Verlage die KI überleben? | DIE ZEIT" target="_blank">Direktlink</a>), um mehr Gewissheit über die Qualität der Suchergebnisse zu erhalten. Wie ihr in der <a href="Digitale Kompetenzen für lebenslanges Lernen - 2-jährige Grundbildung (EBA)" target="_blank">SLP-Übersicht</a> sieht, ist das bereits mitgedacht.</p>
+        
+        <h2>Praktische Anwendungsbeispiele</h2>
+        
+        <p>Informationskompetenz könnte auch sein, einschätzen zu können, wie Sonntagszeitungen nicht unbedingt lange Fachartikel abdrucken, sondern lieber ein wenig - saisonbedingt gesehen - Sonnenwind in Strandfrisuren bringen möchten.</p>
+        
+        <p>So macht es aus meiner Sicht bei der bereits bestehenden Datenlage von Wanderungen gerade keinen Sinn, ohne zusätzliche Einschränkungen/Rahmenbedingungen generative Sprachmodelle Wanderungen zusammenstellen zu lassen. Da spürt man wohl eher den starken redaktionellen Wunsch im Hintergrund, ein aktuelle Beschäftigung des Wanderns mit einem neuem Zauberstab der Komplexreduktion in Verbindung zu bringen. Ob das nun passt oder nicht, ist der Autorin wohl ziemlich „wurscht". Ist es doch erstens durchaus bekannt, dass die KI selbst nicht wandern geht und zweitens dass mit Tiktok herrlich nach Wanderungen gesucht werden kann (<a href="https://www.beobachter.ch/magazin/gesellschaft/alles-tiktok-oder-was-774086" target="_blank">Jugendliche suchen vor allem mit Tiktok</a>), die auch dem sinnlichen und individuellen Aspekt von Wanderungen gerechter werden. Wenn KI in diesem konkreten Themenfeld einen Praxisbezug haben soll, dann aber bitte mit Perplexity eine Quellenübersicht anfragen - z.B. zu Stadtwanderungen in Zürich - und dann kann man mit dem passenden Prompt nach unentdeckten Mustern suchen.</p>
+        
+        <div class="tip">
+            Nutzt die Suchfunktion in Tiktok und gebt Stadtwanderung in Zürich ein - oder was auch immer.
+        </div>
+        
+        <h2>Grenzen der KI am Beispiel Textkorrektur</h2>
+        
+        <p>Das Korrekturbeispiel hat mich natürlich auch getriggert. Wen man wirklich eine ansatzweise gute Korrektur möchte, dann braucht es sehr grosse Prompts. Den im Anhang abgelegten Prompt habe ich dieses Jahr als Vergleich zu meiner „Handkorrektur" genutzt. Nicht schlecht, aber für eine Endkorrektur immer noch zu wenig gut. Für ein Zwischenfeedback an die Lernenden wäre der Prompt aber sehr hilfreich. Direkt durch die Lernenden einsetzbar, z.B. per Fobizz.</p>
+        
+        <p>Zudem wird mir bei diesem Beispiel als Philosoph ziemlich schwindlig, wenn ich sehe, dass von der KI ein Verständnis für Wahrheit erwartet wird. Sie könnte mir sicherlich Wahrheitstheorien zusammenfassen, aber die Pointe in einem Aufsatz zu verstehen, der sich mit dem Thema der Wahrheit auseinandersetzen soll und von der Textart her schon immer einen individualisierten Lebensbezug hat, kann nur scheitern. Für das Aneignen einer Kompetenz ist das Fallbeispiel wieder sehr passend, sieht man doch schnell, dass bei der Umsetzung dieser Fragenstellung sichtbar wird, dass die KI nicht versteht, sondern nur berechnet.</p>
+        
+        <h2>Lebensbereiche jenseits der KI</h2>
+        
+        <div class="quote">
+            <p>Wie auch immer: Gerade die Ferienzeit zeigt uns - wohl noch für alle Ewigkeit - dass viele Lebensbereiche vorhanden sind, wo es für die KI keine Anwendungsfeld gibt, sei das beim gemeinsamen Erleben von Abenteuern, beim Nichtstun, beim Schlemmen, beim Wellnessen, beim Lachen, beim Lange-Aufbleiben oder beim Ausschlafen.</p>
+        </div>
+        
+        <p>Auch das muss gelernt sein. Ganz ohne Komplexität geht es auch hier nicht.</p>
+    </div>
+</body>
+</html>
