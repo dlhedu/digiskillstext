@@ -117,32 +117,7 @@
             width: 100%;
         }
         
-        a.term {
-            color: #00f2fe;
-            text-decoration: none;
-            border-bottom: 2px dotted #00f2fe;
-            position: relative;
-            display: inline-block;
-            cursor: help;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        a.term:hover {
-            color: #4facfe;
-            border-bottom-color: #4facfe;
-            text-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
-        }
-        
-        a.term::after {
-            display: none;
-        }
-        
-        a.term:hover .tooltip {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-        }
-        
+
         .term {
             position: relative;
             display: inline-block;
@@ -151,6 +126,8 @@
             font-weight: 500;
             border-bottom: 2px dotted #00f2fe;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         
         .term:hover {
@@ -268,10 +245,20 @@
                 margin: 20px 0;
             }
             
+            /* Make touch targets larger on mobile */
+            .term {
+                padding: 2px 4px;
+                margin: -2px -4px;
+                min-height: 30px;
+                display: inline-flex;
+                align-items: center;
+            }
+            
             /* Mobile tooltip behavior */
             .term {
-                position: static;
-                display: inline;
+                position: relative;
+                display: inline-block;
+                cursor: pointer;
             }
             
             .tooltip {
@@ -286,34 +273,22 @@
                 font-size: 0.85em;
                 padding: 12px 15px;
                 border-radius: 10px;
-                background: rgba(31, 31, 51, 0.95);
-                z-index: 1000;
-                transition: transform 0.3s ease;
+                background: rgba(31, 31, 51, 0.98);
+                z-index: 9999;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                pointer-events: auto;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
             }
             
+            .term.active .tooltip,
+            /* Touch device support */
             .term:active .tooltip {
-                transform: translateX(0) translateY(0);
                 opacity: 1;
+                transform: translateX(0) translateY(0);
             }
             
             .tooltip::after {
                 display: none;
-            }
-            
-            a.term .tooltip {
-                position: fixed;
-                bottom: 20px;
-                left: 10px;
-                right: 10px;
-                top: auto;
-                transform: translateX(0) translateY(100%);
-                width: auto;
-                margin: 0;
-            }
-            
-            a.term:active .tooltip {
-                transform: translateX(0) translateY(0);
-                opacity: 1;
             }
         }
         
@@ -336,19 +311,9 @@
             }
         }
         
-        /* Touch device support */
-        @media (hover: none) {
-            .term:active .tooltip,
-            a.term:active .tooltip {
-                opacity: 1;
-                transform: translateX(0) translateY(0);
-            }
-        }
-        
-        /* Additional styles for touch devices */
-        @media (hover: none) {
-            .term.active .tooltip,
-            a.term.active .tooltip {
+        /* Mobile and touch devices */
+        @media (hover: none), (pointer: coarse) {
+            .term.active .tooltip {
                 opacity: 1;
                 transform: translateX(0) translateY(0);
             }
@@ -391,7 +356,7 @@
         
         <h2>Digital Literacy und Informationskompetenz</h2>
         
-        <p>Aber KI ist nicht gleich Prompting, dieser Meinung bin ich natürlich auch. Wenn man die Auseinandersetzung um die <a href="https://static1.squarespace.com/static/59bc3457ccc5c5890fe7cacd/t/680abc889c24c4528be7cda8/1745534104111/DS+CHW+Framework_EN_04.02.25+%281%29.pdf" target="_blank">Digital Literacy (gutes Beispiel einer berufsspezifischen Umsetzung)</a> (AI Literacy wird im <a href="https://artificialintelligenceact.eu/ai-literacy-programs/" target="_blank">EU AI Act</a> als <a href="https://www.lawpilots.com/de/lp/ki-fuehrerschein/" target="_blank">Pflicht</a> für Unternehmen aufgeführt) ansieht, können mehrere Themenbereiche identifiziert werden, eines davon ist die Informationskompetenz. Diese ist aus meiner Sicht von grosser Bedeutung für die digitale Kompetenz der Mitglieder einer Gesellschaft.</p>
+        <p>Aber KI ist nicht gleich Prompting, dieser Meinung bin ich natürlich auch. Wenn man die Auseinandersetzung um die <span class="term">Digital Literacy<span class="tooltip">Die Fähigkeit, digitale Technologien kompetent und kritisch zu nutzen. Umfasst technische Fertigkeiten, Informationsbewertung, digitale Kommunikation und das Verständnis digitaler Auswirkungen auf Gesellschaft und Individuum.</span></span> (<a href="https://static1.squarespace.com/static/59bc3457ccc5c5890fe7cacd/t/680abc889c24c4528be7cda8/1745534104111/DS+CHW+Framework_EN_04.02.25+%281%29.pdf" target="_blank">gutes Beispiel einer berufsspezifischen Umsetzung</a>) (AI Literacy wird im <span class="term">EU AI Act<span class="tooltip">Die weltweit erste umfassende KI-Regulierung der EU. Sie klassifiziert KI-Systeme nach Risikostufen und fordert von Unternehmen Transparenz, Sicherheitsmaßnahmen und die Förderung von AI Literacy bei Mitarbeitenden.</span></span> (<a href="https://artificialintelligenceact.eu/ai-literacy-programs/" target="_blank">Details zu AI Literacy Programs</a>) als <a href="https://www.lawpilots.com/de/lp/ki-fuehrerschein/" target="_blank">Pflicht</a> für Unternehmen aufgeführt) ansieht, können mehrere Themenbereiche identifiziert werden, eines davon ist die Informationskompetenz. Diese ist aus meiner Sicht von grosser Bedeutung für die digitale Kompetenz der Mitglieder einer Gesellschaft.</p>
         
         <p>KI ist aber als Technologie in Informationsaneignungsprozessen bereits fest integriert und wird noch stärker integriert werden, so lanciert gerade Perplexity einen eigenen Browser und OpenAI hat einen eigenen Browser angekündigt. Wichtige Informationsorte, welche mit der Einfachheit der Googlesuche bis jetzt nicht den nötigen Stellenwert erhalten haben, sind kuratierte und z.T. geschlossene Medienarchive wie swissdox, e-thek oder statista. Diese als kuratierte Quellenarchive sichtbar zu machen und aufzuwerten, ist eine mögliche Praxis in den aktuell stark veränderten Such- und Recherchetools (<a href="https://share.evernote.com/note/1c0f0d2d-7647-6c7b-37d9-81c4144d4b24" target="_blank">siehe Text der Zeit.de</a> oder <a href="https://www.zeit.de/2025/30/verlagswesen-krise-kuenstliche-intelligenz-medienbranche-google" target="_blank">Direktlink</a>), um mehr Gewissheit über die Qualität der Suchergebnisse zu erhalten. Wie ihr in der <a href="https://dlhedu.github.io/slpabudskills/" target="_blank">SLP-Übersicht</a> sieht, ist das bereits mitgedacht.</p>
         
@@ -422,32 +387,70 @@
     
     <script>
         // Mobile touch support for tooltips
-        if ('ontouchstart' in window) {
+        document.addEventListener('DOMContentLoaded', function() {
             let activeTooltip = null;
             
-            document.querySelectorAll('.term, a.term').forEach(term => {
+            // Function to handle tooltip activation
+            function activateTooltip(term) {
+                // Close any open tooltip
+                if (activeTooltip && activeTooltip !== term) {
+                    activeTooltip.classList.remove('active');
+                    const oldTooltip = activeTooltip.querySelector('.tooltip');
+                    if (oldTooltip) {
+                        oldTooltip.style.opacity = '0';
+                        oldTooltip.style.transform = 'translateX(0) translateY(100%)';
+                    }
+                }
+                
+                // Toggle current tooltip
+                term.classList.toggle('active');
+                const tooltip = term.querySelector('.tooltip');
+                if (tooltip) {
+                    if (term.classList.contains('active')) {
+                        tooltip.style.opacity = '1';
+                        tooltip.style.transform = 'translateX(0) translateY(0)';
+                        activeTooltip = term;
+                    } else {
+                        tooltip.style.opacity = '0';
+                        tooltip.style.transform = 'translateX(0) translateY(100%)';
+                        activeTooltip = null;
+                    }
+                }
+            }
+            
+            // Add click and touch listeners for all devices
+            document.querySelectorAll('.term').forEach(term => {
+                // Click event for all devices
+                term.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    activateTooltip(this);
+                });
+                
+                // Touch event for mobile devices
                 term.addEventListener('touchstart', function(e) {
                     e.preventDefault();
-                    
-                    // Close any open tooltip
-                    if (activeTooltip && activeTooltip !== this) {
-                        activeTooltip.classList.remove('active');
-                    }
-                    
-                    // Toggle current tooltip
-                    this.classList.toggle('active');
-                    activeTooltip = this.classList.contains('active') ? this : null;
-                });
+                    e.stopPropagation();
+                    activateTooltip(this);
+                }, {passive: false});
             });
             
-            // Close tooltip when touching outside
-            document.addEventListener('touchstart', function(e) {
+            // Close tooltip when clicking/touching outside
+            document.addEventListener('click', handleOutsideClick);
+            document.addEventListener('touchstart', handleOutsideClick, {passive: false});
+            
+            function handleOutsideClick(e) {
                 if (!e.target.closest('.term') && activeTooltip) {
                     activeTooltip.classList.remove('active');
+                    const tooltip = activeTooltip.querySelector('.tooltip');
+                    if (tooltip) {
+                        tooltip.style.opacity = '0';
+                        tooltip.style.transform = 'translateX(0) translateY(100%)';
+                    }
                     activeTooltip = null;
                 }
-            });
-        }
+            }
+        });
     </script>
 </body>
 </html>
