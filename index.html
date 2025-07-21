@@ -116,6 +116,7 @@
             width: 100%;
         }
         
+        /* Basis-Styles für alle Geräte */
         .info-wrapper {
             position: relative;
             display: inline-block;
@@ -128,7 +129,11 @@
             cursor: pointer;
             transition: all 0.3s ease;
             -webkit-tap-highlight-color: transparent;
-            padding: 2px 0;
+            padding: 4px 2px;
+            display: inline-block;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
         }
         
         .info-trigger:hover {
@@ -141,7 +146,7 @@
             position: absolute;
             bottom: 100%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) scale(0.8);
             background: rgba(31, 31, 51, 0.98);
             border: 1px solid rgba(79, 172, 254, 0.5);
             border-radius: 12px;
@@ -157,10 +162,33 @@
             pointer-events: none;
         }
         
+        /* Spezielle Regel für den ersten Info-Begriff im Text */
+        .info-downward .info-content {
+            bottom: auto !important;
+            top: 100% !important;
+            margin-bottom: 0;
+            margin-top: 10px;
+        }
+        
+        .info-downward .info-content::after {
+            bottom: 100%;
+            top: auto;
+            border-bottom-color: rgba(79, 172, 254, 0.5);
+            border-top-color: transparent;
+        }
+        
+        /* Bei Hover/Active auch für downward */
+        .info-downward.active .info-content,
+        .info-downward:hover .info-content {
+            display: block;
+            transform: translateX(-50%) scale(1);
+        }
+        
         .info-wrapper.active .info-content {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
+            transform: translateX(-50%) scale(1);
         }
         
         .info-content::after {
@@ -249,7 +277,8 @@
             }
             
             .info-trigger {
-                padding: 5px 2px;
+                padding: 8px 4px;
+                margin: -4px -2px;
                 display: inline-block;
             }
             
@@ -259,11 +288,41 @@
                 left: 10px;
                 right: 10px;
                 top: auto;
-                transform: translateX(0);
+                transform: translateX(0) translateY(100%);
                 width: auto;
                 margin: 0;
                 font-size: 0.85em;
                 z-index: 9999;
+                opacity: 0;
+                visibility: hidden;
+            }
+            
+            .info-wrapper.active .info-content {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(0) translateY(0);
+            }
+            
+            /* Mobile: Alle Tooltips am unteren Rand, auch downward */
+            .info-downward .info-content {
+                position: fixed;
+                bottom: 20px !important;
+                top: auto !important;
+                left: 10px;
+                right: 10px;
+                transform: translateX(0) translateY(100%);
+                margin: 0;
+            }
+            
+            .info-wrapper.active .info-content {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(0) translateY(0);
+                pointer-events: auto;
+            }
+            
+            .info-downward.active .info-content {
+                transform: translateX(0) translateY(0);
             }
             
             .info-content::after {
@@ -285,8 +344,23 @@
                 font-size: 0.9em;
             }
             
-            .container {
-                padding: 15px;
+        /* Desktop Hover-Effekt */
+        @media (hover: hover) and (pointer: fine) {
+            .info-wrapper:hover .info-content {
+                opacity: 1;
+                visibility: visible;
+                display: block;
+                pointer-events: auto;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+        
+        /* Touch-Geräte brauchen Click */
+        @media (hover: none), (pointer: coarse) {
+            .info-trigger {
+                cursor: pointer;
+                padding: 8px 4px;
+                margin: -4px -2px;
             }
         }
     </style>
@@ -295,7 +369,7 @@
     <div class="container">
         <h1>KI und digitale Kompetenzen</h1>
         
-        <p>Die Frage, für welche Problemstellung sich künstliche Intelligenz eignet ist zentral. Als eine mögliche Antwort finde ich die <span class="info-wrapper"><span class="info-trigger">„Reduktion von Komplexität"</span><span class="info-content">Die Vereinfachung vielschichtiger Zusammenhänge durch systematische Analyse und Strukturierung. KI hilft dabei, aus grossen Datenmengen Muster zu erkennen und komplexe Probleme in handhabbare Teilaufgaben zu zerlegen.</span></span> passend. Sie ist identisch mit der Frage nach der Problemstellung des Lernens. Es wird dadurch auch verständlich, wieso KI und das Lernen diese starke Nähe haben, welche aber auch voller Risiken und Chancen steckt.</p>
+        <p>Die Frage, für welche Problemstellung sich künstliche Intelligenz eignet ist zentral. Als eine mögliche Antwort finde ich die <span class="info-wrapper info-downward"><span class="info-trigger">„Reduktion von Komplexität"</span><span class="info-content">Die Vereinfachung vielschichtiger Zusammenhänge durch systematische Analyse und Strukturierung. KI hilft dabei, aus grossen Datenmengen Muster zu erkennen und komplexe Probleme in handhabbare Teilaufgaben zu zerlegen.</span></span> passend. Sie ist identisch mit der Frage nach der Problemstellung des Lernens. Es wird dadurch auch verständlich, wieso KI und das Lernen diese starke Nähe haben, welche aber auch voller Risiken und Chancen steckt.</p>
         
         <p>KI ist zudem ein Phänomen der Digitalisierung. Die Digitalisierung hilft uns Muster in/mit Daten zu erzeugen, welche uns wiederum helfen, die Komplexität der gesellschaftlichen Handlungen auf Makro- oder Mikroebene zu reduzieren (Grundlagenwerk für diese Thematik: <span class="info-wrapper"><span class="info-trigger">„Muster"</span><span class="info-content">Ein Werk von Armin Nassehi, das die Digitalisierung als Technik zur Mustererkennung in gesellschaftlichen Strukturen analysiert. Es zeigt, wie digitale Technologien soziale Komplexität durch Datenanalyse erfassbar machen.</span></span> von Armin Nassehi).</p>
         
@@ -363,27 +437,39 @@
             // Alle Info-Trigger finden
             const infoTriggers = document.querySelectorAll('.info-trigger');
             
-            infoTriggers.forEach(trigger => {
-                // Event-Listener für Klick/Touch
-                trigger.addEventListener('click', function(e) {
+            infoTriggers.forEach((trigger, index) => {
+                // Touch-Events für mobile Geräte
+                trigger.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
                     e.stopPropagation();
-                    const wrapper = this.closest('.info-wrapper');
-                    
-                    // Wenn bereits aktiv, schließen
-                    if (wrapper === activeInfo) {
-                        wrapper.classList.remove('active');
-                        activeInfo = null;
-                    } else {
-                        // Vorheriges schließen
-                        if (activeInfo) {
-                            activeInfo.classList.remove('active');
-                        }
-                        // Neues öffnen
-                        wrapper.classList.add('active');
-                        activeInfo = wrapper;
-                    }
+                    handleTriggerClick.call(this);
+                }, {passive: false});
+                
+                // Click-Events für Desktop
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleTriggerClick.call(this);
                 });
             });
+            
+            function handleTriggerClick() {
+                const wrapper = this.closest('.info-wrapper');
+                
+                // Wenn bereits aktiv, schließen
+                if (wrapper === activeInfo) {
+                    wrapper.classList.remove('active');
+                    activeInfo = null;
+                } else {
+                    // Vorheriges schließen
+                    if (activeInfo) {
+                        activeInfo.classList.remove('active');
+                    }
+                    // Neues öffnen
+                    wrapper.classList.add('active');
+                    activeInfo = wrapper;
+                }
+            }
             
             // Schließen bei Klick außerhalb
             document.addEventListener('click', function(e) {
@@ -393,9 +479,19 @@
                 }
             });
             
+            document.addEventListener('touchstart', function(e) {
+                if (activeInfo && !e.target.closest('.info-wrapper')) {
+                    activeInfo.classList.remove('active');
+                    activeInfo = null;
+                }
+            });
+            
             // Verhindern, dass Info-Content Klicks das Schließen auslösen
             document.querySelectorAll('.info-content').forEach(content => {
                 content.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+                content.addEventListener('touchstart', function(e) {
                     e.stopPropagation();
                 });
             });
