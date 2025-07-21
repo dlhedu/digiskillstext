@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>KI und digitale Kompetenzen</title>
     <style>
         * {
@@ -84,8 +84,10 @@
         
         p {
             margin-bottom: 20px;
-            text-align: justify;
+            text-align: left;
             opacity: 0.9;
+            word-spacing: normal;
+            hyphens: auto;
         }
         
         a {
@@ -109,6 +111,10 @@
             left: 0;
             background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
             transition: width 0.3s ease;
+        }
+        
+        a:hover::after {
+            width: 100%;
         }
         
         a.term {
@@ -225,18 +231,126 @@
             margin-bottom: 10px;
         }
         
+        /* Mobile optimization */
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                line-height: 1.7;
+            }
+            
             .container {
-                padding: 30px;
+                padding: 20px;
+                border-radius: 15px;
             }
             
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+                margin: 30px 0 15px 0;
+            }
+            
+            p {
+                font-size: 0.95em;
+                margin-bottom: 15px;
+            }
+            
+            .quote {
+                padding: 15px;
+                margin: 20px 0;
+            }
+            
+            .tip {
+                padding: 15px;
+                margin: 20px 0;
+            }
+            
+            /* Mobile tooltip behavior */
+            .term {
+                position: static;
+                display: inline;
             }
             
             .tooltip {
-                width: 250px;
+                position: fixed;
+                bottom: 20px;
+                left: 10px;
+                right: 10px;
+                top: auto;
+                transform: translateX(0) translateY(100%);
+                width: auto;
+                margin: 0;
+                font-size: 0.85em;
+                padding: 12px 15px;
+                border-radius: 10px;
+                background: rgba(31, 31, 51, 0.95);
+                z-index: 1000;
+                transition: transform 0.3s ease;
+            }
+            
+            .term:active .tooltip {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+            }
+            
+            .tooltip::after {
+                display: none;
+            }
+            
+            a.term .tooltip {
+                position: fixed;
+                bottom: 20px;
+                left: 10px;
+                right: 10px;
+                top: auto;
+                transform: translateX(0) translateY(100%);
+                width: auto;
+                margin: 0;
+            }
+            
+            a.term:active .tooltip {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            h2 {
+                font-size: 1.2em;
+                padding-left: 15px;
+            }
+            
+            p {
                 font-size: 0.9em;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+        
+        /* Touch device support */
+        @media (hover: none) {
+            .term:active .tooltip,
+            a.term:active .tooltip {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+        }
+        
+        /* Additional styles for touch devices */
+        @media (hover: none) {
+            .term.active .tooltip,
+            a.term.active .tooltip {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
             }
         }
     </style>
@@ -277,7 +391,7 @@
         
         <h2>Digital Literacy und Informationskompetenz</h2>
         
-        <p>Aber KI ist nicht gleich Prompting, dieser Meinung bin ich natürlich auch. Wenn man die Auseinandersetzung um die <a href="https://static1.squarespace.com/static/59bc3457ccc5c5890fe7cacd/t/680abc889c24c4528be7cda8/1745534104111/DS+CHW+Framework_EN_04.02.25+%281%29.pdf" target="_blank">Digital Literacy (gutes Beispiel einer berufsspezifischen Umsetzung)</a> (AI Literacy wird im <a href="https://artificialintelligenceact.eu/ai-literacy-programs/" target="_blank">EU AI Act</a> als <a href="KI-Führerschein - lawpilots" target="_blank">Pflicht</a> für Unternehmen aufgeführt) ansieht, können mehrere Themenbereiche identifiziert werden, eines davon ist die Informationskompetenz. Diese ist aus meiner Sicht von grosser Bedeutung für die digitale Kompetenz der Mitglieder einer Gesellschaft.</p>
+        <p>Aber KI ist nicht gleich Prompting, dieser Meinung bin ich natürlich auch. Wenn man die Auseinandersetzung um die <a href="https://static1.squarespace.com/static/59bc3457ccc5c5890fe7cacd/t/680abc889c24c4528be7cda8/1745534104111/DS+CHW+Framework_EN_04.02.25+%281%29.pdf" target="_blank">Digital Literacy (gutes Beispiel einer berufsspezifischen Umsetzung)</a> (AI Literacy wird im <a href="https://artificialintelligenceact.eu/ai-literacy-programs/" target="_blank">EU AI Act</a> als <a href="https://www.lawpilots.com/de/lp/ki-fuehrerschein/" target="_blank">Pflicht</a> für Unternehmen aufgeführt) ansieht, können mehrere Themenbereiche identifiziert werden, eines davon ist die Informationskompetenz. Diese ist aus meiner Sicht von grosser Bedeutung für die digitale Kompetenz der Mitglieder einer Gesellschaft.</p>
         
         <p>KI ist aber als Technologie in Informationsaneignungsprozessen bereits fest integriert und wird noch stärker integriert werden, so lanciert gerade Perplexity einen eigenen Browser und OpenAI hat einen eigenen Browser angekündigt. Wichtige Informationsorte, welche mit der Einfachheit der Googlesuche bis jetzt nicht den nötigen Stellenwert erhalten haben, sind kuratierte und z.T. geschlossene Medienarchive wie swissdox, e-thek oder statista. Diese als kuratierte Quellenarchive sichtbar zu machen und aufzuwerten, ist eine mögliche Praxis in den aktuell stark veränderten Such- und Recherchetools (<a href="https://share.evernote.com/note/1c0f0d2d-7647-6c7b-37d9-81c4144d4b24" target="_blank">siehe Text der Zeit.de</a> oder <a href="https://www.zeit.de/2025/30/verlagswesen-krise-kuenstliche-intelligenz-medienbranche-google" target="_blank">Direktlink</a>), um mehr Gewissheit über die Qualität der Suchergebnisse zu erhalten. Wie ihr in der <a href="https://dlhedu.github.io/slpabudskills/" target="_blank">SLP-Übersicht</a> sieht, ist das bereits mitgedacht.</p>
         
@@ -293,7 +407,7 @@
         
         <h2>Grenzen der KI am Beispiel Textkorrektur</h2>
         
-        <p>Das Korrekturbeispiel hat mich natürlich auch getriggert. Wen man wirklich eine ansatzweise gute Korrektur möchte, dann braucht es sehr grosse Prompts. Den im Anhang abgelegten Prompt habe ich dieses Jahr als Vergleich zu meiner „Handkorrektur" genutzt. Nicht schlecht, aber für eine Endkorrektur immer noch zu wenig gut. Für ein Zwischenfeedback an die Lernenden wäre der Prompt aber sehr hilfreich. Direkt durch die Lernenden einsetzbar, z.B. per Fobizz.</p>
+        <p>Das Korrekturbeispiel hat mich natürlich auch getriggert. Wen man wirklich eine ansatzweise gute Korrektur möchte, dann braucht es sehr grosse Prompts. <a href="https://bbwch-my.sharepoint.com/:t:/g/personal/christof_glaus_bbw_ch/EYPq6BfVkC5LlAH3vOpeSOcBosOug0yDxfVIOcun_e34Ng?e=oDMV9P" target="_blank">Diesen verlinkten Prompt</a> habe ich dieses Jahr als Vergleich zu meiner „Handkorrektur" genutzt. Nicht schlecht, aber für eine Endkorrektur immer noch zu wenig gut. Für ein Zwischenfeedback an die Lernenden wäre der Prompt aber sehr hilfreich. Direkt durch die Lernenden einsetzbar, z.B. per Fobizz.</p>
         
         <p>Zudem wird mir bei diesem Beispiel als Philosoph ziemlich schwindlig, wenn ich sehe, dass von der KI ein Verständnis für Wahrheit erwartet wird. Sie könnte mir sicherlich Wahrheitstheorien zusammenfassen, aber die Pointe in einem Aufsatz zu verstehen, der sich mit dem Thema der Wahrheit auseinandersetzen soll und von der Textart her schon immer einen individualisierten Lebensbezug hat, kann nur scheitern. Für das Aneignen einer Kompetenz ist das Fallbeispiel wieder sehr passend, sieht man doch schnell, dass bei der Umsetzung dieser Fragenstellung sichtbar wird, dass die KI nicht versteht, sondern nur berechnet.</p>
         
@@ -305,5 +419,35 @@
         
         <p>Auch das muss gelernt sein. Ganz ohne Komplexität geht es auch hier nicht.</p>
     </div>
+    
+    <script>
+        // Mobile touch support for tooltips
+        if ('ontouchstart' in window) {
+            let activeTooltip = null;
+            
+            document.querySelectorAll('.term, a.term').forEach(term => {
+                term.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    
+                    // Close any open tooltip
+                    if (activeTooltip && activeTooltip !== this) {
+                        activeTooltip.classList.remove('active');
+                    }
+                    
+                    // Toggle current tooltip
+                    this.classList.toggle('active');
+                    activeTooltip = this.classList.contains('active') ? this : null;
+                });
+            });
+            
+            // Close tooltip when touching outside
+            document.addEventListener('touchstart', function(e) {
+                if (!e.target.closest('.term') && activeTooltip) {
+                    activeTooltip.classList.remove('active');
+                    activeTooltip = null;
+                }
+            });
+        }
+    </script>
 </body>
 </html>
